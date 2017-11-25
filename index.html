@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <meta charset="utf-8" />
+  <title>TODOS</title>
+  <link rel="stylesheet" href="./node_modules/todomvc-app-css/index.css" />
+ </head>
+ <body>
+  <section class="todoapp">
+   <header class="header">
+    <h1>TODOS</h1>
+    <input class="new-todo" placeholder="What is need doing ?" autofocus=""
+    v-model="newTodo"
+    @keyup.enter="addTodo"
+    />
+   </header>
+   <section class="main"
+   v-show="showTodos"
+   >
+    <input class="toggle-all" id="toggle-all" type="checkbox"
+    v-model="allDone"
+    />
+    <label for="toggle-all">AllDone</label>
+    <ul class="todo-list">
+      <todo-item :todo="todo"
+                 :edited-todo="editedTodo"
+                 v-for="(todo, index) in filteredTodos"
+                 :key="'todo-' + index"
+                 @remove-todo="removeTodo"
+                 @edit-todo="editTodo"
+                 @done-edit="doneEdit"
+                 @cancel-edit="cancelEdit"
+      ></todo-item>
+    </ul>
+   </section>
+   <footer class="footer"
+   v-show="showTodos"
+   >
+    <span class="todo-count"><strong>{{ activeCount }}</strong> Left Items</span>
+    <ul class="filters">
+     <li> <a href="#/"
+       :class="{ selected: visibility === 'all' }"
+       @click="visibility='all'"
+       >All</a> </li>
+     <li> <a href="#/active"
+       :class="{ selected: visibility === 'active' }"
+       @click="visibility='active'"
+       >Active</a> </li>
+     <li> <a href="#/completed"
+       :class="{ selected: visibility === 'completed' }"
+       @click="visibility='completed'"
+       >Completed</a> </li>
+    </ul>
+    <button class="clear-completed"
+    @click="removeCompleted"
+    v-show="completedCount"
+    >Clear All</button>
+   </footer>
+  </section>
+  <script src="./node_modules/vue/dist/vue.js" charset="utf-8"></script>
+  <script src="./js/store.js" charset="utf-8"></script>
+  <script src="./js/app.js" charset="utf-8"></script>
+  <a class="help" href="https://github.com/lolong/TODOS#功能描述使用说明" target="_blank">Help: 功能描述/使用说明</a>
+ </body>
+</html>
